@@ -1,0 +1,909 @@
+* {    margin: 0;
+    padding: 0;
+    box-sizing: border-box;}
+
+html,body {    width: 100%;
+    height: 100%;}
+
+body {    font-family: "Nunito", sans-serif;
+    overflow: hidden;
+    color: #ffffff;}
+
+
+/* =========================
+   BACKGROUND IMAGE
+========================= */
+
+/*
+    Ảnh giữ nguyên tỉ lệ gốc.
+    KHÔNG dùng background-size: cover
+    để tránh crop ảnh.
+*/
+
+.background-image {
+    position: fixed;
+    inset: 0;
+
+    background-image: url("images/1.jpg");
+
+    background-repeat: no-repeat;
+
+    background-position: center center;
+
+    /* FULL MÀN HÌNH */
+    background-size: cover;
+
+    background-color: #f5e9ee;
+
+    z-index: -3;
+}
+
+
+/* Lớp phủ rất nhẹ */
+
+.background-overlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(255, 245, 250, 0.18);
+
+    z-index: -2;
+
+    pointer-events: none;}
+
+
+/* =========================
+   FLOATING HEARTS
+========================= */
+
+.hearts-container {    position: fixed;
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    z-index: 5;}
+
+.floating-heart {    position: absolute;
+
+    bottom: -30px;
+
+    color: rgba(255, 255, 255, 0.8);
+
+    text-shadow:
+        0 2px 8px rgba(190, 100, 140, 0.25);
+
+    opacity: 0;
+
+    animation: floatHeart linear forwards;}
+
+@keyframes floatHeart {
+
+    0% {        transform:
+            translateY(0)
+            rotate(0deg);
+
+        opacity: 0;    }
+
+    15% {        opacity: 0.7;    }
+
+    80% {        opacity: 0.45;    }
+
+    100% {        transform:
+            translateY(-110vh)
+            rotate(25deg);
+
+        opacity: 0;    }
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.page {    position: relative;
+
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    padding: 35px 20px;
+
+    z-index: 2;}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.title {    text-align: center;
+
+    margin-bottom: 20px;
+
+    flex-shrink: 0;
+
+    color: #fff;
+    text-shadow:
+        0 2px 12px rgba(50, 30, 40, 0.45); 
+
+    font-weight: 100}
+
+
+.title-heart {    font-size: 35px;
+
+    margin-bottom: 3px;
+
+    animation: heartbeat 2s infinite;}
+
+@keyframes heartbeat {
+    0%,
+    100% {        transform: scale(1);    }
+
+    50% {        transform: scale(1.15);    }
+}
+
+.title h1 {    font-size: clamp(27px, 4vw, 43px);
+
+    font-weight: 800;
+
+    margin-bottom: 5px;}
+
+.title p {    font-size: 15px;
+
+    font-weight: 600;}
+
+
+/* =========================
+   CONFESSION BOX
+========================= */
+
+.confession-box {
+    width: min(760px, 92vw);
+
+    /*
+        Quan trọng:
+        Khung có chiều cao giới hạn.
+        CFS dài sẽ cuộn bên trong.
+    */
+
+    height: min(650px, 72vh);
+
+    display: flex;
+
+    flex-direction: column;
+
+    /*
+        KÍNH MỜ
+    */
+
+    background: rgba(255, 245, 250, 0.42);
+
+    backdrop-filter: blur(10px);
+
+    -webkit-backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255, 255, 255, 0.65);
+
+    border-radius: 30px;
+
+    box-shadow:
+        0 20px 60px rgba(70, 30, 50, 0.18),
+        inset 0 1px 0 rgba(255,255,255,0.7);
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   BOX TOP
+========================= */
+
+.box-top {
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 22px 28px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.5);
+}
+
+.box-top > span {    width: 45px;
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255,255,255,0.55);
+
+    border-radius: 15px;
+
+    font-size: 22px;}
+
+.box-top h2 {
+    font-size: 21px;
+    font-weight: 800;
+
+    /* Hồng tím đậm, dễ nhìn */
+    color: #A83F70;}
+
+.box-top p {
+    margin-top: 2px;
+
+    font-size: 13px;
+
+    color: #765C67;}
+
+
+/* =========================
+   CONFESSION SCROLL
+========================= */
+
+.confession-scroll {
+
+    flex: 1;
+
+    min-height: 0;
+
+    overflow-y: auto;
+
+    padding: 28px 32px 35px;
+
+    scrollbar-width: thin;
+
+    scrollbar-color:
+        rgba(190, 105, 145, 0.45)
+        transparent;
+}
+
+
+/* Chrome / Edge scrollbar */
+
+.confession-scroll::-webkit-scrollbar {
+    width: 7px;
+}
+
+.confession-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.confession-scroll::-webkit-scrollbar-thumb {
+
+    background:
+        rgba(190, 105, 145, 0.4);
+
+    border-radius: 20px;
+}
+
+
+/* =========================
+   CONFESSION
+========================= */
+
+.confession {
+    /*
+       Màu chính của CFS
+       Đậm hơn màu hiện tại rất nhiều
+    */
+    color: #40343A;
+
+    font-size: 16px;
+
+    line-height: 2;
+
+    text-align: justify;
+
+    text-justify: inter-word;
+    
+}
+
+.date {
+    color: #87566D;
+
+    font-size: 13px;
+
+    font-style: italic;
+
+    text-align: left;
+
+    margin-bottom: 25px;
+}
+
+.confession-content p {    margin-bottom: 20px;}
+
+.last-line {    color: #8F315F;
+
+    font-weight: 800;
+
+    margin-top: 28px;}
+
+
+/* =========================
+   SIGNATURE
+========================= */
+
+.signature {    margin-top: 35px;
+
+    padding-top: 20px;
+
+    border-top:
+        1px dashed
+        rgba(125, 85, 105, 0.25);
+
+    text-align: right;
+
+    color: #87566D;
+
+    font-size: 14px;
+
+    font-style: italic;}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 700px) {
+
+    .background-image {
+
+        /*
+            Trên điện thoại vẫn giữ nguyên
+            tỉ lệ ảnh, không crop.
+        */
+
+        background-size: cover;
+
+        background-position: center;
+    }
+
+    .page {        padding:
+            25px 12px;    }
+
+    .title {        margin-bottom: 16px;    }
+
+    .title-heart {        font-size: 28px;    }
+
+    .title h1 {        font-size: 25px;    }
+
+    .title p {        font-size: 13px;    }
+
+    .confession-box {        width: 94vw;
+
+        height: 70vh;
+
+        border-radius: 24px;    }
+
+    .box-top {        padding: 17px 20px;    }
+
+    .box-top > span {        width: 40px;
+        height: 40px;
+
+        font-size: 19px;    }
+
+    .box-top h2 {        font-size: 18px;    }
+
+    .confession-scroll {        padding:
+                24px 20px 30px;    }
+
+    .confession {        font-size: 15px;
+
+        line-height: 1.9;    }
+}
+
+
+/* =========================
+   SMALL PHONE
+========================= */
+
+@media (max-width: 700px) {
+
+    .background-image {
+        background-size: cover;
+        background-position: center center;
+    }
+
+    .page {
+        padding: 25px 12px;
+    }
+
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: "Nunito", sans-serif;
+    overflow: hidden;
+    color: #684f5d;
+}
+
+
+/* =========================
+   BACKGROUND IMAGE
+========================= */
+
+/*
+    Ảnh giữ nguyên tỉ lệ gốc.
+    KHÔNG dùng background-size: cover
+    để tránh crop ảnh.
+*/
+
+.background-image {
+    position: fixed;
+    inset: 0;
+
+    background-image: url("images/background.jpg");
+
+    background-repeat: no-repeat;
+
+    background-position: center center;
+
+    /*
+        Giữ nguyên chất lượng / tỉ lệ ảnh.
+        Ảnh sẽ nằm giữa màn hình.
+    */
+    background-size: contain;
+
+    background-color: #f8eaf0;
+
+    z-index: -3;
+}
+
+
+/* Lớp phủ rất nhẹ */
+
+.background-overlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(255, 245, 250, 0.18);
+
+    z-index: -2;
+
+    pointer-events: none;
+}
+
+
+/* =========================
+   FLOATING HEARTS
+========================= */
+
+.hearts-container {
+    position: fixed;
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    z-index: 5;
+}
+
+.floating-heart {
+    position: absolute;
+
+    bottom: -30px;
+
+    color: #ffffff;
+
+    text-shadow:
+        0 2px 8px rgba(190, 100, 140, 0.25);
+
+    opacity: 0;
+
+    animation: floatHeart linear forwards;
+}
+
+@keyframes floatHeart {
+
+    0% {
+        transform:
+            translateY(0)
+            rotate(0deg);
+
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 0.7;
+    }
+
+    80% {
+        opacity: 0.45;
+    }
+
+    100% {
+        transform:
+            translateY(-110vh)
+            rotate(25deg);
+
+        opacity: 0;
+    }
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.page {
+    position: relative;
+
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    padding: 35px 20px;
+
+    z-index: 2;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.title {
+    text-align: center;
+
+    margin-bottom: 22px;
+
+    flex-shrink: 0;
+
+    color: #fff;
+
+    text-shadow:
+        0 2px 12px rgba(90, 40, 60, 0.35);
+}
+
+.title-heart {
+    font-size: 35px;
+
+    margin-bottom: 3px;
+
+    animation: heartbeat 2s infinite;
+}
+
+@keyframes heartbeat {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+.title h1 {
+    font-size: clamp(27px, 4vw, 43px);
+
+    font-weight: 800;
+
+    margin-bottom: 5px;
+}
+
+.title p {
+    font-size: 15px;
+
+    font-weight: 600;
+    margin-bottom: 20 px;
+}
+
+
+/* =========================
+   CONFESSION BOX
+========================= */
+
+.confession-box {
+
+    width: min(760px, 92vw);
+
+    /*
+        Quan trọng:
+        Khung có chiều cao giới hạn.
+        CFS dài sẽ cuộn bên trong.
+    */
+
+    height: min(650px, 72vh);
+
+    display: flex;
+
+    flex-direction: column;
+
+    /*
+        KÍNH MỜ
+    */
+
+    background: rgba(255, 245, 250, 0.42);
+
+    backdrop-filter: blur(16px);
+
+    -webkit-backdrop-filter: blur(16px);
+
+    border: 1px solid rgba(255, 255, 255, 0.65);
+
+    border-radius: 30px;
+
+    box-shadow:
+        0 20px 60px rgba(70, 30, 50, 0.18),
+        inset 0 1px 0 rgba(255,255,255,0.7);
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   BOX TOP
+========================= */
+
+.box-top {
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 22px 28px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.5);
+}
+
+.box-top > span {
+
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255,255,255,0.55);
+
+    border-radius: 15px;
+
+    font-size: 22px;
+}
+
+.box-top h2 {
+
+    font-size: 20px;
+
+    color: #a9577d;
+
+    font-weight: 800;
+}
+
+.box-top p {
+
+    margin-top: 2px;
+
+    font-size: 13px;
+
+    color: #8f6878;
+}
+
+
+/* =========================
+   CONFESSION SCROLL
+========================= */
+
+.confession-scroll {
+    flex: 1;
+    min-height: 0;
+
+    overflow-y: auto;
+
+    /* Căn lề trái + phải */
+    padding: 28px 45px 35px;
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba(190, 105, 145, 0.45) transparent;
+}
+
+
+/* Chrome / Edge scrollbar */
+
+.confession-scroll::-webkit-scrollbar {
+    width: 7px;
+}
+
+.confession-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.confession-scroll::-webkit-scrollbar-thumb {
+
+    background:
+        rgba(190, 105, 145, 0.4);
+
+    border-radius: 20px;
+}
+
+
+/* =========================
+   CONFESSION
+========================= */
+
+.confession {
+    color: #624e59;
+    font-size: 16px;
+    line-height: 2;
+
+    text-align: justify;
+
+    padding: 0 5px;
+}
+
+.date {
+
+    color: #a96e88;
+
+    font-size: 13px;
+
+    font-style: italic;
+
+    margin-bottom: 25px;
+}
+
+.confession-content p {
+
+    margin-bottom: 20px;
+}
+
+.last-line {
+
+    color: #b85880;
+
+    font-weight: 800;
+
+    margin-top: 30px;
+}
+
+
+/* =========================
+   SIGNATURE
+========================= */
+
+.signature {
+
+    margin-top: 35px;
+
+    padding-top: 20px;
+
+    border-top:
+        1px dashed
+        rgba(170, 95, 125, 0.3);
+
+    text-align: right;
+
+    color: #a96e88;
+
+    font-size: 14px;
+
+    font-style: italic;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 700px) {
+
+    .background-image {
+
+        /*
+            Trên điện thoại vẫn giữ nguyên
+            tỉ lệ ảnh, không crop.
+        */
+
+        background-size: cover;
+
+        background-position: center;
+    }
+
+    .page {
+
+        padding:
+            25px 12px;
+    }
+
+    .title {
+
+        margin-bottom: 16px;
+    }
+
+    .title-heart {
+
+        font-size: 28px;
+    }
+
+    .title h1 {
+
+        font-size: 25px;
+    }
+
+    .title p {
+
+        font-size: 13px;
+    }
+
+    .confession-box {
+
+        width: 94vw;
+
+        height: 70vh;
+
+        border-radius: 24px;
+    }
+
+    .box-top {
+
+        padding: 17px 20px;
+    }
+
+    .box-top > span {
+
+        width: 40px;
+        height: 40px;
+
+        font-size: 19px;
+    }
+
+    .box-top h2 {
+
+        font-size: 18px;
+    }
+
+    .confession-scroll {
+
+        padding:
+            24px 20px 30px;
+    }
+
+    .confession {
+
+        font-size: 15px;
+
+        line-height: 1.9;
+    }
+}
+
